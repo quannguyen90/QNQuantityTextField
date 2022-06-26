@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol KeyboardChooseDelegate: class {
+protocol KeyboardChooseDelegate: AnyObject {
     func keyboardChoose(keyboard: KeyboardChoose, widthForComponent component: Int) -> CGFloat
     func keyboardChoose(keyboard: KeyboardChoose, rowHeightForComponent component: Int) -> CGFloat
     func keyboardChoose(keyboard: KeyboardChoose, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
@@ -18,7 +18,7 @@ protocol KeyboardChooseDelegate: class {
     func keyboardChoose(keyboard: KeyboardChoose, didChooseDate value: NSDate)
 }
 
-protocol KeyboardChooseDataSource: class {
+protocol KeyboardChooseDataSource: AnyObject {
     func keyboardChoose(keyboard: KeyboardChoose, numberOfRowsInComponent component: Int) -> Int
     func numberOfComponentsInKeyboardChoose(keyboard: KeyboardChoose) -> Int
 }

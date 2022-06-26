@@ -185,7 +185,7 @@ public class QuantityTextField: TextFieldCustom {
             var string = local.stringFromNumber(amount ?? NSNumber(value: 0), maximumFractionDigits: maximumFractionDigits)
             if let isContain = self.text?.contains(decimalSeparatorSymbol), isContain {
                 if self.text?.last == "0" {
-                    string = local.stringFromNumber(amount ?? NSNumber(value: 0))
+                    string = local.stringFromNumber(amount ?? NSNumber(value: 0), maximumFractionDigits: maximumFractionDigits)
                     
                     //String.stringWithNumber(number: amount?.doubleValue ?? 0, withNumberOfFractionDigits: numberFraction, minimumFractionDigits: numberFraction)
                 }
