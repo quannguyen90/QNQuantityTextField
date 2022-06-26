@@ -1,0 +1,6 @@
+framework module Pods_QNQuantityTextField_Tests {
+  umbrella header "Pods-QNQuantityTextField_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

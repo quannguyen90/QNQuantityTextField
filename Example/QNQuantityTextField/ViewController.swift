@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import QNQuantityTextField
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var textField: QuantityTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        textField.local = AppLocale(localeIdentifier: "vi_VN") //= Locale(identifier: "VN")
+        textField.isShowComma = true 
+        textField.reloadInputViews()
         // Do any additional setup after loading the view, typically from a nib.
     }
 

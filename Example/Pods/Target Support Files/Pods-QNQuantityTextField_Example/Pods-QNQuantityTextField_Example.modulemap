@@ -1,0 +1,6 @@
+framework module Pods_QNQuantityTextField_Example {
+  umbrella header "Pods-QNQuantityTextField_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
