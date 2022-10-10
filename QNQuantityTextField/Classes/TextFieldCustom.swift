@@ -15,7 +15,7 @@ public enum TextFieldWithCustomType: String {
 
 public class TextFieldCustom: UITextField {
 
-	static let heightKeyboard: CGFloat = (isIPad() == true) ? 350.0 : 250.0
+	static let heightKeyboard: CGFloat = (isIPad() == true) ? 250 : 250.0
 
     public var textFieldCustomType: TextFieldWithCustomType = .Normal {
 		didSet {

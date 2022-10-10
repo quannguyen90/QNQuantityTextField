@@ -9,7 +9,7 @@ import UIKit
 
 public class AppLocale: NSObject {
     let defaultCurrency = "đ"
-    static let sharedInstance = AppLocale()
+    public static let sharedInstance = AppLocale()
     
     public init(localeIdentifier: String) {
         self.localeIdentifier = localeIdentifier
@@ -63,7 +63,7 @@ public class AppLocale: NSObject {
     }
     
     
-    var maximumFractionDigits: Int = 2
+    public var maximumFractionDigits: Int = 2
     
     
     override init() {
@@ -140,10 +140,10 @@ extension AppLocale {
     }
     
     func stringFromNumber(_ number: Double, mumFractionDigits num: NSInteger) -> String? {
-        let numberFormatterOther = NumberFormatter()
-        numberFormatterOther.locale = self.locale
-        numberFormatterOther.maximumFractionDigits = num
-        return numberFormatterOther.string(from: NSNumber(value: number as Double))
+        numberFormatter.locale = self.locale
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = num
+        return numberFormatter.string(from: NSNumber(value: number as Double))
     }
     
 }

@@ -8,20 +8,22 @@
 
 import UIKit
 
-protocol QuantityTextFieldDelegate: AnyObject {
+@objc public protocol QuantityTextFieldDelegate: AnyObject {
     func quantityTextField(_ textField: QuantityTextField, didChangeNumber number: NSNumber?)
 }
 
 
-
 public class QuantityTextField: TextFieldCustom {
    
-    public var isShowComma = false {
+     @objc public var isShowComma = false {
         didSet {
             refreshDisplayWithAmount(amount: amount)
             self.reloadInputViews()
         }
     }
+    @objc public var maximumAmount: NSNumber?
+    @objc public  weak var quantityDelegate: QuantityTextFieldDelegate?
+
     
     private var amount: NSNumber? {
         didSet {
@@ -37,15 +39,18 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     
-    var maximumFractionDigits: Int = 5
-    var maximumAmount: Double?
+    var maximumFractionDigits: Int {
+        get {
+            return local.maximumFractionDigits
+        }
+    }
     
     public var decimalSeparatorSymbol = ","
     public var groupingSeparatorSymbol = "."
 
-    weak var quantityDelegate: QuantityTextFieldDelegate?
     
     public override func awakeFromNib() {
+        local = AppLocale.sharedInstance
         super.awakeFromNib()
         self.delegate = self
         self.addTarget(self, action: #selector(QuantityTextField.textFieldDidChange(textField:)), for: .editingChanged)
@@ -109,7 +114,7 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     
-    func setAmount(_ amount: NSNumber?) {
+    @objc public func setAmount(_ amount: NSNumber?) {
         if self.amount == nil {
             self.amount = amount
             refreshDisplayWithAmount(amount: amount)
@@ -119,13 +124,13 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     
-    func getAmount() -> NSNumber? {
+    @objc public func getAmount() -> NSNumber? {
         return self.amount
     }
     
     
     private func refreshDisplayWithAmount(amount: NSNumber?) {
-        let string = local.stringFromNumber(amount ?? NSNumber(value: 0))
+        let string = local.stringFromNumber(amount ?? NSNumber(value: 0), maximumFractionDigits: self.maximumFractionDigits)
         //.stringWithNumber(number: amount?.doubleValue ?? 0, withNumberOfFractionDigits: numberFractionDigit)
         let result = caculateDataFromText(inputText: string)
        
@@ -137,7 +142,7 @@ public class QuantityTextField: TextFieldCustom {
     
     private func changeAmount(_ amount: NSNumber?) {
         if self.amount?.floatValue != amount?.floatValue {
-            self.amount = amount
+            self.setAmount(amount)
             quantityDelegate?.quantityTextField(self, didChangeNumber: self.amount)
         }
     }
@@ -194,8 +199,8 @@ public class QuantityTextField: TextFieldCustom {
         }
         
         guard let amount = amount else { return (nil, nil) }
-        let amountReal = amount.doubleValue < maximumAmount ? amount: NSNumber(value: maximumAmount)
-        let string = local.stringFromNumber(amountReal)
+        let amountReal = amount.doubleValue < maximumAmount.doubleValue ? amount : maximumAmount
+        let string = local.stringFromNumber(amountReal.doubleValue, mumFractionDigits: maximumFractionDigits)
         return (string, amountReal)
     }
 }
@@ -203,38 +208,55 @@ public class QuantityTextField: TextFieldCustom {
 extension QuantityTextField: UITextFieldDelegate {
     
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
         guard let text = textField.text else {
             return true
         }
-        print("--->> string: ", string)
 
         let comma = decimalSeparatorSymbol
+        let nsString = (textField.text as NSString?) ?? ""
+
+        var newString = nsString.replacingCharacters(in: range, with: string)
+        let groupingSeparator = groupingSeparatorSymbol
+        newString = newString.replacingOccurrences(of: groupingSeparator, with: "")
+        
         if text.contains(comma) {
             // co dau ','
-            if let componentAfter = text.components(separatedBy: comma).last, componentAfter.count > 0 {
-                if componentAfter.count == maximumFractionDigits {
+            let components = newString.components(separatedBy: decimalSeparatorSymbol)
+            if components.count == 2 {
+                if components[1].count > maximumFractionDigits {
                     return false
                 }
             }
-            
-            return true
         }
         
-        let nsString = (textField.text as NSString?) ?? ""
-        print("nsString: ", nsString)
-        var newString = nsString.replacingCharacters(in: range, with: string)
-        print("newString2: ", newString)
-        let groupingSeparator = groupingSeparatorSymbol
-        newString = newString.replacingOccurrences(of: groupingSeparator, with: "")
-        print("newString3: ", newString)
+        
         if newString.components(separatedBy: decimalSeparatorSymbol).count == 2 {
             let newStringDecimal = newString.components(separatedBy: decimalSeparatorSymbol)[1]
-            if newStringDecimal.count < self.maximumFractionDigits {
+            if newStringDecimal.count <= self.maximumFractionDigits {
+                if let maximum = self.maximumAmount {
+                    if let num = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits), num.doubleValue < maximum.doubleValue {
+                        return true
+                    }
+                    self.changeAmount(maximum)
+                    return false
+                }
+                
                 if let _ = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits) {
                     return true
                 }
             }
         } else {
+            
+            if let maximum = self.maximumAmount {
+                if let num = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits), num.doubleValue < maximum.doubleValue {
+                    return true
+                }
+                
+                self.changeAmount(maximum)
+                return false
+            }
+            
             if let _ = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits) {
                 return true
             }

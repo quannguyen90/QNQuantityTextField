@@ -32,25 +32,21 @@ class KeyItemImageCell: UICollectionViewCell {
 
 	func setIconWithName(name: String?) {
 		if let iconName = name {
-            if #available(iOS 13.0, *) {
-                iconCell.image = UIImage(named: iconName, in: Bundle(for: KeyItemImageCell.self), with: nil)
-            } else {
-                // Fallback on earlier versions
-                iconCell.image = UIImage(named: iconName, in: Bundle(for: KeyItemImageCell.self), compatibleWith: nil)
-
-            }
+            iconCell.image = getImage(name: iconName)
 		}
 	}
 
 	func setIconHightlightWithName(name: String?) {
 		if let iconName = name {
-            if #available(iOS 13.0, *) {
-                iconCell.highlightedImage = UIImage(named: iconName, in: Bundle(for: KeyItemImageCell.self), with: nil)
-            } else {
-                // Fallback on earlier versions
-                iconCell.highlightedImage = UIImage(named: iconName, in: Bundle(for: KeyItemImageCell.self), compatibleWith: nil)
-
-            }
+            iconCell.image = getImage(name: iconName)
 		}
 	}
+    
+    func getImage(name: String) -> UIImage? {
+        let frameworkBundle = Bundle(for: KeyItemImageCell.self)
+        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("QNQuantityTextField.bundle")
+        let resourceBundle = Bundle(url: bundleURL!)
+
+        return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
+    }
 }

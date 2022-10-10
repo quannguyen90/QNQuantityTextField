@@ -20,7 +20,6 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
 Support input number type double, interger, format display by custom local
                        DESC
 
@@ -35,11 +34,12 @@ Support input number type double, interger, format display by custom local
 
   s.source_files = 'QNQuantityTextField/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'QNQuantityTextField' => ['QNQuantityTextField/Assets/*.png']
-  # }
+   s.resource_bundles = {
+     'QNQuantityTextField' => ['QNQuantityTextField/Assets/*.xcassets']
+   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
+#  /Users/quannv/Documents/Projects/iOSLibs/QNQuantityTextField/QNQuantityTextField/Media.xcassets
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
