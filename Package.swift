@@ -13,22 +13,7 @@ let package = Package(
            name: "QNQuantityTextField",
            path: "QNQuantityTextField"
 //           resources: [.process("/Assets/Media.xcassets")]
+//           resources: [.process("/Assets/Media.xcassets")]
        )
    ]
 )
-
-
-//let package = Package(
-//    name: "Alamofire",
-//    products: [
-//        .library(
-//            name: "Alamofire",
-//            targets: ["Alamofire"])
-//    ],
-//    targets: [
-//        .target(
-//            name: "Alamofire",
-//            path: "Source")
-//    ],
-//    swiftLanguageVersions: [.v4, .v5]
-//)
