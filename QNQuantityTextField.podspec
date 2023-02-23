@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'QNQuantityTextField'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'Support input number type double, interger, format display by custom local'
   s.swift_version = '5.0'
 

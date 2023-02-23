@@ -50,7 +50,6 @@ public class QuantityTextField: TextFieldCustom {
 
     
     public override func awakeFromNib() {
-        local = AppLocale.sharedInstance
         super.awakeFromNib()
         self.delegate = self
         self.addTarget(self, action: #selector(QuantityTextField.textFieldDidChange(textField:)), for: .editingChanged)

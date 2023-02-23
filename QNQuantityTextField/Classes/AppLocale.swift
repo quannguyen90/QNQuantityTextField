@@ -20,7 +20,7 @@ public class AppLocale: NSObject {
     }
 
     fileprivate let dateFormatter = DateFormatter()
-    fileprivate let numberFormatter = NumberFormatter()
+    public let numberFormatter = NumberFormatter()
 
     public var locale: Locale = Locale.current {
         didSet {
