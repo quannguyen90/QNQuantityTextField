@@ -31,10 +31,8 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     
-    public override var local: AppLocale {
+    public override var local: AppLocale  {
         didSet {
-            groupingSeparatorSymbol = local.groupingSeparator
-            decimalSeparatorSymbol = local.decimalSeparator
             reloadInputViews()
         }
     }
@@ -45,9 +43,16 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     
-    public var decimalSeparatorSymbol = ","
-    public var groupingSeparatorSymbol = "."
-
+    public var decimalSeparatorSymbol: String {
+        get {
+            return local.decimalSeparator
+        }
+    }
+    public var groupingSeparatorSymbol: String {
+        get {
+            return local.groupingSeparator
+        }
+    }
     
     public override func awakeFromNib() {
         super.awakeFromNib()
