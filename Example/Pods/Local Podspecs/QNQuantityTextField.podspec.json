@@ -1,8 +1,9 @@
 {
   "name": "QNQuantityTextField",
-  "version": "0.1.0",
-  "summary": "A short description of QNQuantityTextField.",
-  "description": "TODO: Add long description of the pod here.",
+  "version": "1.1.2",
+  "summary": "Support input number type double, interger, format display by custom local",
+  "swift_versions": "5.0",
+  "description": "Support input number type double, interger, format display by custom local",
   "homepage": "https://github.com/quannguyen90/QNQuantityTextField",
   "license": {
     "type": "MIT",
@@ -13,10 +14,15 @@
   },
   "source": {
     "git": "https://github.com/quannguyen90/QNQuantityTextField.git",
-    "tag": "0.1.0"
+    "tag": "1.1.2"
   },
   "platforms": {
     "ios": "10.0"
   },
-  "source_files": "QNQuantityTextField/Classes/**/*"
+  "resources": [
+    "QNQuantityTextField/Fonts/*.{OTF,ttf}",
+    "QNQuantityTextField/Assets/**/*.{png,pdf}"
+  ],
+  "source_files": "QNQuantityTextField/Classes/**/*",
+  "swift_version": "5.0"
 }

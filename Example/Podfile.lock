@@ -15,7 +15,7 @@ PODS:
   - Nimble-Snapshots/Core (9.4.0):
     - iOSSnapshotTestCase (~> 8.0)
     - Nimble
-  - QNQuantityTextField (0.1.0)
+  - QNQuantityTextField (1.1.2)
   - Quick (2.2.1)
 
 DEPENDENCIES:
@@ -42,9 +42,9 @@ SPEC CHECKSUMS:
   iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   Nimble-Snapshots: ef281b908c604f78c8313587e25ea92c8ab513d7
-  QNQuantityTextField: 587f8608e739eb49499f3e4808e88a0ced6c5d81
+  QNQuantityTextField: 2813c2468733a06cabb7af7d2fd60263f9ac7a76
   Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
 
 PODFILE CHECKSUM: 24acc79eeb82781f9c78b492a970ff323a8c9e61
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.12.0

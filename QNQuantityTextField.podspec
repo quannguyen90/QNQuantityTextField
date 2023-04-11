@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'QNQuantityTextField'
-  s.version          = '1.1.2'
+  s.version          = '1.2.1'
   s.summary          = 'Support input number type double, interger, format display by custom local'
   s.swift_version = '5.0'
 
@@ -32,11 +32,13 @@ Support input number type double, interger, format display by custom local
 
   s.ios.deployment_target = '10.0'
 
+  s.resources = ["MoMoVoucher/Fonts/*.{OTF,ttf}", 'MoMoVoucher/Assets/**/*.{png,pdf}']
+
   s.source_files = 'QNQuantityTextField/Classes/**/*'
-  
-   s.resource_bundles = {
-     'QNQuantityTextField' => ['QNQuantityTextField/Assets/*.xcassets']
-   }
+  s.resources = ["QNQuantityTextField/Fonts/*.{OTF,ttf}", 'QNQuantityTextField/Assets/**/*.{png,pdf}']
+#  s.resource_bundles = {
+#     'QNQuantityTextField' => ['QNQuantityTextField/Assets/*.xcassets']
+#   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
 #  /Users/quannv/Documents/Projects/iOSLibs/QNQuantityTextField/QNQuantityTextField/Media.xcassets

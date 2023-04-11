@@ -508,8 +508,9 @@ extension KeyboardCustom {
 		let keyDisplay: KeyItem = listKeysMainView![indexPath.row] as KeyItem
 		if keyDisplay.isDisplayIcon {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: indetifierCellImage, for: indexPath) as! KeyItemImageCell
+            cell.labelName.text = keyDisplay.textDisplay
 			cell.setIconWithName(name: keyDisplay.iconName)
-			cell.setIconHightlightWithName(name: keyDisplay.iconHightlight)
+			cell.setIconHightlightWithName(name: keyDisplay.iconHightlight ?? keyDisplay.iconName)
 			return cell
 		} else {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: indetifierCellText, for: indexPath) as! KeyItemTextCell

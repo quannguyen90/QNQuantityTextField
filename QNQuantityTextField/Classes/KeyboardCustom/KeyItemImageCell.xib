@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,15 +19,23 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="global_numpad_key_bg_normal_grey" highlightedImage="global_numpad_key_bg_normal" translatesAutoresizingMaskIntoConstraints="NO" id="ZJY-iF-qri">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="15" placeholderIntrinsicHeight="15" translatesAutoresizingMaskIntoConstraints="NO" id="8wn-NP-gGo">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="15" placeholderIntrinsicHeight="15" image="icon_back_space" translatesAutoresizingMaskIntoConstraints="NO" id="8wn-NP-gGo">
                         <rect key="frame" x="17.5" y="17.5" width="15" height="15"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="It7-vk-zIr">
+                        <rect key="frame" x="4" y="14.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="It7-vk-zIr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="J8a-Lf-n5l"/>
                 <constraint firstItem="ZJY-iF-qri" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NJb-th-m2O"/>
+                <constraint firstItem="It7-vk-zIr" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="RAT-p4-Fqn"/>
                 <constraint firstAttribute="trailing" secondItem="ZJY-iF-qri" secondAttribute="trailing" id="Unt-jc-St8"/>
                 <constraint firstItem="8wn-NP-gGo" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="XtT-8C-LaO"/>
                 <constraint firstItem="8wn-NP-gGo" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ntO-Ke-8Am"/>
@@ -37,6 +45,7 @@
             <connections>
                 <outlet property="iconCell" destination="8wn-NP-gGo" id="WFh-51-asR"/>
                 <outlet property="imageViewBackground" destination="ZJY-iF-qri" id="0b0-to-ayQ"/>
+                <outlet property="labelName" destination="It7-vk-zIr" id="wcT-C0-qf1"/>
             </connections>
             <point key="canvasLocation" x="92" y="18"/>
         </collectionViewCell>
@@ -44,5 +53,6 @@
     <resources>
         <image name="global_numpad_key_bg_normal" width="109" height="75"/>
         <image name="global_numpad_key_bg_normal_grey" width="109" height="75"/>
+        <image name="icon_back_space" width="10" height="10"/>
     </resources>
 </document>
