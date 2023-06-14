@@ -22,6 +22,8 @@ public class QuantityTextField: TextFieldCustom {
         }
     }
     @objc public var maximumAmount: NSNumber?
+    @objc public var minimumAmount: NSNumber?
+
     @objc public  weak var quantityDelegate: QuantityTextFieldDelegate?
 
     
@@ -156,25 +158,25 @@ public class QuantityTextField: TextFieldCustom {
             return (nil, nil)
         }
         
-        let groupingSeparator = groupingSeparatorSymbol
-        let text = inputText.replacingOccurrences(of: groupingSeparator, with: "")
+        let txt = inputText.replacingOccurrences(of: groupingSeparatorSymbol, with: "")
         
-        if text.contains(decimalSeparatorSymbol) {
-            
-            if let lastComponent = text.components(separatedBy: decimalSeparatorSymbol).last, lastComponent.count > 0 {
-                let numberFractionDigit = lastComponent.count < self.maximumFractionDigits ? lastComponent.count : self.maximumFractionDigits
-                let number = local.numberFromStringQuantity(text, maximumFractionDigits: self.maximumFractionDigits)
-                let result = getAmountAfterCheckMaxAmount(amount: number, numberFraction: numberFractionDigit)
-                return result
+        if let number = local.numberFromStringQuantity(txt, maximumFractionDigits: self.maximumFractionDigits) {
+            let maximum = maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
+            let minimum = minimumAmount?.doubleValue ?? 0
+            if number.doubleValue >= minimum && number.doubleValue <= maximum {
+                let text = local.stringFromNumber(number.doubleValue, mumFractionDigits: self.maximumFractionDigits)
+                return (text, number)
+            } else if number.doubleValue < minimum {
+                let text = local.stringFromNumber(minimum, mumFractionDigits: self.maximumFractionDigits)
+                return (text, NSNumber(value: minimum))
             } else {
-                return (inputText, amount)
+                let text = local.stringFromNumber(maximum, mumFractionDigits: self.maximumFractionDigits)
+                return (text, NSNumber(value: maximum))
             }
-            
         } else {
-            let number = local.numberFromStringQuantity(text, maximumFractionDigits: self.maximumFractionDigits)
-            let result = getAmountAfterCheckMaxAmount(amount: number, numberFraction: self.maximumFractionDigits)
-            return result
+            return (nil, nil)
         }
+        
     }
 
     
@@ -238,31 +240,41 @@ extension QuantityTextField: UITextFieldDelegate {
         if newString.components(separatedBy: decimalSeparatorSymbol).count == 2 {
             let newStringDecimal = newString.components(separatedBy: decimalSeparatorSymbol)[1]
             if newStringDecimal.count <= self.maximumFractionDigits {
-                if let maximum = self.maximumAmount {
-                    if let num = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits), num.doubleValue < maximum.doubleValue {
+                
+                let txt = newString.replacingOccurrences(of: groupingSeparatorSymbol, with: "")
+                if let num = local.numberFromStringQuantity(txt, maximumFractionDigits: maximumFractionDigits) {
+                    let max = self.maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
+                    let min = self.minimumAmount?.doubleValue ?? 0
+                    
+                    if num.doubleValue >= min && num.doubleValue <= max {
                         return true
+                    } else if num.doubleValue < min {
+                        self.changeAmount(self.minimumAmount)
+                        return false
+                    } else {
+                        self.changeAmount(self.maximumAmount)
+                        return false
                     }
-                    self.changeAmount(maximum)
-                    return false
                 }
-                
-                if let _ = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits) {
-                    return true
-                }
-            }
-        } else {
-            
-            if let maximum = self.maximumAmount {
-                if let num = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits), num.doubleValue < maximum.doubleValue {
-                    return true
-                }
-                
-                self.changeAmount(maximum)
+            } else {
                 return false
             }
-            
-            if let _ = local.numberFromStringQuantity(newString, maximumFractionDigits: maximumFractionDigits) {
-                return true
+        } else {
+            let txt = newString.replacingOccurrences(of: groupingSeparatorSymbol, with: "")
+
+            if let num = local.numberFromStringQuantity(txt, maximumFractionDigits: maximumFractionDigits) {
+                let max = self.maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
+                let min = self.minimumAmount?.doubleValue ?? 0
+                
+                if num.doubleValue >= min && num.doubleValue <= max {
+                    return true
+                } else if num.doubleValue < min {
+                    self.changeAmount(self.minimumAmount)
+                    return false
+                } else {
+                    self.changeAmount(self.maximumAmount)
+                    return false
+                }
             }
         }
         
