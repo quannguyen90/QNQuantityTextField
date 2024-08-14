@@ -536,7 +536,7 @@ extension KeyboardCustom {
 			var height: CGFloat = 0.0
 			if let count = listKeysMainView?.count {
 				let numberRow = count / 3
-				height = (collectionView.frame.size.height - (CGFloat(numberRow) * 0.5)) / CGFloat(numberRow)
+				height = 50//(collectionView.frame.size.height - (CGFloat(numberRow) * 0.5)) / CGFloat(numberRow)
 			}
 
             let size = CGSize(width: width, height: height)

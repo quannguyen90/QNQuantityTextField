@@ -58,18 +58,22 @@ public class TextFieldCustom: UITextField {
 	func setKeyboardNumberCustom() {
 		let keyboard = createInputViewNumber()
 		self.inputView = keyboard
-	}
+    }
 
 	func createInputViewNumber() -> KeyboardCustom {
 		let width = UIScreen.main.bounds.size.width;
-        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: TextFieldCustom.heightKeyboard + UIApplication.bottomMargin)
+        let mainKeys = createListMainKey()
+        let count = mainKeys.count
+        let row = count % 3 > 0 ? count / 3 + 1 : count / 3
+        let height = CGFloat(row * 50) + 40
+        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height + UIApplication.bottomMargin)
 
 		let keyBoardType = (isIPad() == true) ? KeyboardComponentType.ContainRightComponent : KeyboardComponentType.OnlyMainboard
 		let keyboard = KeyboardCustom(frame: frame, inputViewStyle: .keyboard, componentType: keyBoardType)
 
 		keyboard.mainViewMarginLeft = 0.0
 		keyboard.keyboarDelegate = self
-		keyboard.listKeysMainView = createListMainKey()
+		keyboard.listKeysMainView = mainKeys
 		keyboard.listKeysLeftView = createListLeftKey()
 
 		return keyboard

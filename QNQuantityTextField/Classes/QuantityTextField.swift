@@ -87,11 +87,20 @@ public class QuantityTextField: TextFieldCustom {
         let itemKeyDel = KeyItem(ID: "del", textDisplay: "del", actionKey: false, icon: iconDeleteImage, iconHightlight: iconDeleteHighlightImage, displayIcon: true)
         mainKeys.append(itemKeyDel)
         
+        let itemKey = KeyItem(ID: "-", textDisplay: "-", actionKey: false, icon: "", iconHightlight: nil, displayIcon: false)
+        mainKeys.append(itemKey)
         return mainKeys
     }
     
     override func keyboardCustom(keyboard: KeyboardCustom, didSelectKey keyItem: KeyItem) {
         switch keyItem.ID {
+        case "-":
+            let text = self.text ?? ""
+            if text.isEmpty {
+                self.insertText("-")
+                return
+            }
+            
         case "del":
             
             self.deleteBackward()
@@ -158,6 +167,10 @@ public class QuantityTextField: TextFieldCustom {
             return (nil, nil)
         }
         
+        if inputText == "-0" {
+            return (inputText, NSNumber(value: 0))
+        }
+    
         let txt = inputText.replacingOccurrences(of: groupingSeparatorSymbol, with: "")
         
         if let number = local.numberFromStringQuantity(txt, maximumFractionDigits: self.maximumFractionDigits) {
@@ -216,6 +229,10 @@ extension QuantityTextField: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard let text = textField.text else {
+            return true
+        }
+        
+        if text == "-" && string == "0" {
             return true
         }
 

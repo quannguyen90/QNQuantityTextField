@@ -15,7 +15,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.local = AppLocale(localeIdentifier: "vi_VN") //= Locale(identifier: "VN")
-        textField.isShowComma = true 
+        textField.isShowComma = true
+        textField.minimumAmount = NSNumber(value: -Double.greatestFiniteMagnitude)
+        textField.setAmount(NSNumber(value: -12345677))
+        
         textField.reloadInputViews()
         // Do any additional setup after loading the view, typically from a nib.
     }
