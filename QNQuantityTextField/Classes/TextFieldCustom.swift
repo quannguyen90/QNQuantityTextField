@@ -15,7 +15,7 @@ public enum TextFieldWithCustomType: String {
 
 public class TextFieldCustom: UITextField {
 
-	static let heightKeyboard: CGFloat = (isIPad() == true) ? 250 : 250.0
+//	static let heightKeyboard: CGFloat = (isIPad() == true) ? 250 : 250.0
 
     public var textFieldCustomType: TextFieldWithCustomType = .Normal {
 		didSet {
@@ -41,6 +41,14 @@ public class TextFieldCustom: UITextField {
         let keyboard = self.inputView as? KeyboardCustom
         keyboard?.listKeysMainView = createListMainKey()
         keyboard?.listKeysLeftView = createListLeftKey()
+        
+        let width = UIScreen.main.bounds.size.width;
+        let mainKeys = createListMainKey()
+        let count = mainKeys.count
+        let row = count % 3 > 0 ? count / 3 + 1 : count / 3
+        let height = CGFloat(row * 50) 
+        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height + UIApplication.bottomMargin)
+        keyboard?.frame = frame
     }
     
 	func setCustomInputViewIfNeed() {
@@ -65,7 +73,7 @@ public class TextFieldCustom: UITextField {
         let mainKeys = createListMainKey()
         let count = mainKeys.count
         let row = count % 3 > 0 ? count / 3 + 1 : count / 3
-        let height = CGFloat(row * 50) + 40
+        let height = CGFloat(row * 50)
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height + UIApplication.bottomMargin)
 
 		let keyBoardType = (isIPad() == true) ? KeyboardComponentType.ContainRightComponent : KeyboardComponentType.OnlyMainboard

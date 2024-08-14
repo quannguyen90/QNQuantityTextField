@@ -87,8 +87,10 @@ public class QuantityTextField: TextFieldCustom {
         let itemKeyDel = KeyItem(ID: "del", textDisplay: "del", actionKey: false, icon: iconDeleteImage, iconHightlight: iconDeleteHighlightImage, displayIcon: true)
         mainKeys.append(itemKeyDel)
         
-        let itemKey = KeyItem(ID: "-", textDisplay: "-", actionKey: false, icon: "", iconHightlight: nil, displayIcon: false)
-        mainKeys.append(itemKey)
+        if let minimumAmount = minimumAmount?.doubleValue, minimumAmount < 0 {
+            let itemKey = KeyItem(ID: "-", textDisplay: "-", actionKey: false, icon: "", iconHightlight: nil, displayIcon: false)
+            mainKeys.append(itemKey)
+        }
         return mainKeys
     }
     
@@ -175,7 +177,7 @@ public class QuantityTextField: TextFieldCustom {
         
         if let number = local.numberFromStringQuantity(txt, maximumFractionDigits: self.maximumFractionDigits) {
             let maximum = maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
-            let minimum = minimumAmount?.doubleValue ?? 0
+            let minimum = minimumAmount?.doubleValue ?? -Double.greatestFiniteMagnitude
             if number.doubleValue >= minimum && number.doubleValue <= maximum {
                 let text = local.stringFromNumber(number.doubleValue, mumFractionDigits: self.maximumFractionDigits)
                 return (text, number)
@@ -261,7 +263,7 @@ extension QuantityTextField: UITextFieldDelegate {
                 let txt = newString.replacingOccurrences(of: groupingSeparatorSymbol, with: "")
                 if let num = local.numberFromStringQuantity(txt, maximumFractionDigits: maximumFractionDigits) {
                     let max = self.maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
-                    let min = self.minimumAmount?.doubleValue ?? 0
+                    let min = self.minimumAmount?.doubleValue ?? -Double.greatestFiniteMagnitude
                     
                     if num.doubleValue >= min && num.doubleValue <= max {
                         return true
@@ -281,7 +283,7 @@ extension QuantityTextField: UITextFieldDelegate {
 
             if let num = local.numberFromStringQuantity(txt, maximumFractionDigits: maximumFractionDigits) {
                 let max = self.maximumAmount?.doubleValue ?? Double.greatestFiniteMagnitude
-                let min = self.minimumAmount?.doubleValue ?? 0
+                let min = self.minimumAmount?.doubleValue ?? -Double.greatestFiniteMagnitude
                 
                 if num.doubleValue >= min && num.doubleValue <= max {
                     return true

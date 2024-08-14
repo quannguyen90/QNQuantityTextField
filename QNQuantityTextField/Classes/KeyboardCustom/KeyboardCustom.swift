@@ -532,11 +532,19 @@ extension KeyboardCustom {
             let height = (collectionView.frame.height - 25) / 4
 			return CGSize(width: width, height: height)
 		} else {
-			let width = (collectionView.frame.size.width - 1.5) / 3.0
+			var width = (collectionView.frame.size.width - 1.5) / 3.0
 			var height: CGFloat = 0.0
 			if let count = listKeysMainView?.count {
 				let numberRow = count / 3
 				height = 50//(collectionView.frame.size.height - (CGFloat(numberRow) * 0.5)) / CGFloat(numberRow)
+                let remainCount = count % 3
+                if remainCount > 0 {
+                    if indexPath.row >= count - remainCount {
+                        width = (collectionView.frame.size.width - CGFloat(remainCount) * 0.5) / CGFloat(remainCount)
+                    } else {
+                        width = (collectionView.frame.size.width - 1.5) / 3.0
+                    }
+                }
 			}
 
             let size = CGSize(width: width, height: height)
